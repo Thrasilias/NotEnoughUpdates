@@ -14,7 +14,6 @@ public class FlyFix {
 
     public static void onSendAbilities(C13PacketPlayerAbilities packet) {
         if(true) return;
-        //if(!NotEnoughUpdates.INSTANCE.config.misc.flyFix) return;
         if(Minecraft.getMinecraft().thePlayer == null) return;
         if(!Minecraft.getMinecraft().thePlayer.capabilities.allowFlying) return;
         if(!NotEnoughUpdates.INSTANCE.hasSkyblockScoreboard()) return;
@@ -29,7 +28,6 @@ public class FlyFix {
 
     public static void onReceiveAbilities(S39PacketPlayerAbilities packet) {
         if(true) return;
-        //if(!NotEnoughUpdates.INSTANCE.config.misc.flyFix) return;
         if(Minecraft.getMinecraft().thePlayer == null) return;
         if(!Minecraft.getMinecraft().thePlayer.capabilities.allowFlying) return;
         if(!NotEnoughUpdates.INSTANCE.hasSkyblockScoreboard()) return;

@@ -27,6 +27,7 @@ import org.lwjgl.util.vector.Vector3f;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.logging.Logger;
 
 public class FairySouls {
 
@@ -295,7 +296,7 @@ public class FairySouls {
     public static class FairySoulsCommand extends SimpleCommand {
 
         public FairySoulsCommand() {
-            super("neusouls", new ProcessCommandRunnable() {
+            super("souls", new ProcessCommandRunnable() {
                 @Override
                 public void processCommand(ICommandSender sender, String[] args) {
                     if(args.length != 1) {
@@ -310,33 +311,33 @@ public class FairySouls {
                             return;
                         case "on":
                         case "enable":
-                            print(EnumChatFormatting.DARK_PURPLE+"Enabled fairy soul waypoints");
+                            print(EnumChatFormatting.DARK_PURPLE + "Enabled fairy soul waypoints");
                             enabled = true;
                             return;
                         case "off":
                         case "disable":
-                            print(EnumChatFormatting.DARK_PURPLE+"Disabled fairy soul waypoints");
+                            print(EnumChatFormatting.DARK_PURPLE + "Disabled fairy soul waypoints");
                             enabled = false;
                             return;
                         case "clear": {
                                 String location = SBInfo.getInstance().getLocation();
                                 if(currentSoulList == null || location == null) {
-                                    print(EnumChatFormatting.RED+"No fairy souls found in your current world");
+                                    print(EnumChatFormatting.RED + "No fairy souls found in your current world");
                                 } else {
                                     Set<Integer> found = foundSouls.computeIfAbsent(location, k -> new HashSet<>());
                                     for(int i=0; i<currentSoulList.size(); i++) {
                                         found.add(i);
                                     }
-                                    print(EnumChatFormatting.DARK_PURPLE+"Marked all fairy souls as found");
+                                    print(EnumChatFormatting.DARK_PURPLE + "Marked all fairy souls as found in world (" + EnumChatFormatting.YELLOW + Minecraft.getMinecraft().theWorld.getWorldInfo().getWorldName() + EnumChatFormatting.DARK_PURPLE + ")");
                                 }
                             }
                             return;
                         case "unclear":
                             String location = SBInfo.getInstance().getLocation();
                             if(location == null) {
-                                print(EnumChatFormatting.RED+"No fairy souls found in your current world");
+                                print(EnumChatFormatting.RED + "No fairy souls found in your current world");
                             } else {
-                                print(EnumChatFormatting.DARK_PURPLE+"Marked all fairy souls as not found");
+                                print(EnumChatFormatting.DARK_PURPLE + "Marked all fairy souls as not found in world (" + EnumChatFormatting.YELLOW + Minecraft.getMinecraft().theWorld.getWorldInfo().getWorldName() + EnumChatFormatting.DARK_PURPLE + ")");
                                 foundSouls.remove(location);
                             }
                             return;
@@ -353,13 +354,14 @@ public class FairySouls {
 
         private static void printHelp() {
             print("");
-            print(EnumChatFormatting.DARK_PURPLE.toString()+EnumChatFormatting.BOLD+"     NEU Fairy Soul Waypoint Guide");
-            print(EnumChatFormatting.LIGHT_PURPLE+"Shows waypoints for every fairy soul in your world");
-            print(EnumChatFormatting.LIGHT_PURPLE+"Clicking a fairy soul automatically removes it from the list");
-            print(EnumChatFormatting.GOLD.toString()+EnumChatFormatting.BOLD+"     Commands:");
-            print(EnumChatFormatting.YELLOW+"/neusouls help          - Display this message");
-            print(EnumChatFormatting.YELLOW+"/neusouls on/off        - Enable/disable the waypoint markers");
-            print(EnumChatFormatting.YELLOW+"/neusouls clear/unclear - Marks every waypoint in your current world as completed/uncompleted");
+            print(EnumChatFormatting.DARK_PURPLE.toString()+EnumChatFormatting.BOLD + "     NEU Fairy Soul Waypoint Guide");
+            print(EnumChatFormatting.LIGHT_PURPLE + "Shows waypoints for every fairy soul in your world");
+            print(EnumChatFormatting.LIGHT_PURPLE + "Clicking a fairy soul automatically removes it from the list");
+            print(EnumChatFormatting.GOLD.toString()+EnumChatFormatting.BOLD + "     Commands:");
+            print(EnumChatFormatting.YELLOW + "/souls help          - Display this message");
+            print(EnumChatFormatting.YELLOW + "/souls on/off        - Enable/disable the waypoint markers");
+            print(EnumChatFormatting.YELLOW + "/souls clear/unclear - Marks every waypoint in your current world as completed/uncompleted");
+            print(EnumChatFormatting.YELLOW + "/souls particle      - Enable/Disable particle's for fairy souls [BETA]");
             print("");
         }
 
